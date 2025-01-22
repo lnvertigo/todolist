@@ -1,15 +1,15 @@
 CC = gcc
-SRC = main.c
+SRC = todolist.c
 OBJ = ${SRC:.c=.o}
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -I.
 PACKAGE = `pkg-config --cflags --libs gtk+-3.0`
 LIBS = `pkg-config --libs gtk+-3.0`
 
-#build: $(OBJ)
-#	gcc $(CFLAGS) $(OBJ) -o app $(LIBS)
+default: todolist
 
-#./%.o: ./%.c
-#	gcc $(CFLAGS) -c
+todolist: todolist.c
+	gcc todolist.c -o todolist $(CFLAGS) `pkg-config --cflags --libs gtk+-3.0`
 
-build:
-	gcc main.c -o app $(CFLAGS) `pkg-config --cflags --libs gtk+-3.0`
+clean:
+	-rm -f todolist
+	-rm -f $(OBJ)
