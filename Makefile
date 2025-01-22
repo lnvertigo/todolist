@@ -1,14 +1,21 @@
 CC = gcc
-SRC = todolist.c
+SRC_DIR = CORE
+SRC = $(SRC_DIR)/*.c
+OBJ_DIR = OBJS
 OBJ = ${SRC:.c=.o}
-CFLAGS = -Wall -g -I.
+INC_DIR = UTIL
+DEPS = $(INC_DIR)/*.h
+CFLAGS = -Wall -g -I/$(INC_DIR)
 PACKAGE = `pkg-config --cflags --libs gtk+-3.0`
-LIBS = `pkg-config --libs gtk+-3.0`
 
-default: todolist
+all: $(OBJ)
 
-todolist: todolist.c
-	gcc todolist.c -o todolist $(CFLAGS) `pkg-config --cflags --libs gtk+-3.0`
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+
+default: build
+
+build: $(SRC)
+	gcc $(SRC) -o todolist $(CFLAGS) $(PACKAGE)
 
 clean:
 	-rm -f todolist
