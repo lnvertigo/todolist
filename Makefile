@@ -5,7 +5,7 @@ OBJ_DIR = OBJS
 OBJ = ${SRC:.c=.o}
 INC_DIR = UTIL
 DEPS = $(INC_DIR)/*.h
-CFLAGS = -Wall -g -I/$(INC_DIR)
+CFLAGS = -Wall -g -I/$(INC_DIR) -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
 PACKAGE = `pkg-config --cflags --libs gtk+-3.0`
 
 all: $(OBJ)
