@@ -1,0 +1,25 @@
+CC = gcc
+EXEC = todolist
+
+SRC_DIR = ./SRC
+DEP_DIR = ./DEPS
+
+SRCS = $(SRC_DIR)/*.c
+OBJS = ${SRCS:.c=.o}
+DEPS = $(DEP_DIR)/*.h
+
+CFLAGS = -Wall -g -I/$(DEP_DIR) -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
+PACKAGE = `pkg-config --cflags --libs gtk+-3.0`
+
+all: $(OBJS)
+
+%.o: %.c
+	$(CC) -c $< -o $@
+
+build: $(SRCS)
+	$(CC) $(OBJS) -o $(EXEC) $(CFLAGS) $(PACKAGE)
+
+.PHONY: clean
+clean:
+	-rm -f $(EXEC)
+	-rm -f $(OBJS)
