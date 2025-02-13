@@ -1,24 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <gtk/gtk.h>
-// #include "./LIBS/todo_frontend.h"
+#include "../DEP/todo_frontend.h"
 
 // Callback function to handle button click
-// static void on_button_clicked(GtkWidget *widget, gpointer data) {
-// 	g_print("Button clicked\n");
-// }
+void on_button_clicked(GtkWidget *widget, gpointer data) {
+	g_print("Button clicked\n");
+}
 
-/*
-// create storage file if not exists
-void create_file() {
-	int fd = create("./.todo", O_RDWR | O_CREAT | O_EXCL );
-	if (fd == -1) {
+// -------------------------------------
+// TODO: TEST EVERY FUNC BELOW HERE
+// -------------------------------------
+// create storage file (if not exists)
+FILE* create_file() {
+	// int fd = create("./.todo", O_RDWR | O_CREAT | O_EXCL );
+	FILE* fptr = fopen(".todo", "w");
+	if (fptr == NULL) {
 		perror("create()");
 	}
 }
+
 // open storage file for program while running
-void open_file() {
+FILE* open_file() {
 	char* homedir = getenv("HOME");
 	if (homedir == NULL) {
 		perror("getenv fail");
@@ -28,11 +31,10 @@ void open_file() {
 	size_t len = strlen(homedir) + strlen(filename) + 1;
 }
 // close file when naturally closed AND killed
-void close_file() {}
+void close_file(FILE* file) {}
 
 // read existing tasks from file and display previously stored tasks
-void readFile_PrintToWindow(file) {}
+void read_file(FILE* file) {}
 
 // read task from form in gtk and write to file
-void writeTasksToFile(file) {}
-*/
+void writeTasksToFile(FILE* file) {}

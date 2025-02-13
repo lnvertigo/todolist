@@ -3,7 +3,10 @@
 		"*.pde": "java",
 		"*.handlebars": "html",
 		"gtk.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"stdio.h": "c",
+		"todo_backend.h": "c",
+		"unistd.h": "c"
 	}
 
 }

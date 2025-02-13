@@ -1,19 +1,20 @@
 CC = gcc
-CFLAGS = -Wall -g -I/$(INC_DIR) -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
-LDLIBS = `pkg-config --cflags --libs gtk+-3.0`
-# LDLIBS = $(shell pkg-config --libs gtk+-3.0)
 
 SRC_DIR = SRC
 OBJ_DIR = OBJ
-INC_DIR = DEP
+DEP_DIR = DEP
 BIN_DIR = bin
 
 SRCS = $(wildcard $(SRC_DIR)/*.c)
 # SRCS = $(SRC_DIR)/*.c
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 # OBJS = $(patsubst $(SRC_DIR)/%, $(OBJS_DIR)/%, $(SRCS:.c=.o))
-INCS = $(INC_DIR)/*.h
+DEPS = $(wildcard $(DEP_DIR)/*.h)
 XMLS = builder.ui
+
+CFLAGS = -Wall -g -I/$(DEP_DIR) -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -MMD -MP
+LDLIBS = `pkg-config --cflags --libs gtk+-3.0`
+# LDLIBS = $(shell pkg-config --libs gtk+-3.0)
 
 # default target
 all: $(BIN_DIR)/todolist $(BIN_DIR)/$(XMLS)
@@ -27,8 +28,8 @@ $(BIN_DIR)/$(XMLS): $(SRC_DIR)/$(XMLS)
 	cp $(SRC_DIR)/$(XMLS) $(BIN_DIR)/$(XMLS)
 
 # rule to compile src files > obj files in dir
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I$(INC_DIR) $(LDLIBS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEPS) | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I$(DEP_DIR) $(LDLIBS) -c $< -o $@
 
 # create OBJ_DIR if doesn't exist
 $(OBJ_DIR):
