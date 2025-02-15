@@ -7,12 +7,13 @@
 void on_button_clicked(GtkWidget *widget, gpointer data);
 
 // storage file handlers
-FILE* create_file();
+char* get_file_path();
 FILE* open_file();
 void close_file(FILE*);
 
-// read from file
-void read_file(FILE*);
-void writeTasksToFile(FILE*);
+// read/write from file
+void read_file_alltasks(FILE*);
+void read_file_task(FILE*, char*);
+void write_file_task(FILE*);
 
 #endif

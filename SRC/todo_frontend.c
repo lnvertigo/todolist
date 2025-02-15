@@ -29,8 +29,10 @@ void gtk_xml_builder(int argc, char *argv[]) {
 
 	taskname_field = gtk_builder_get_object(builder, "taskname_field");
 
-	submit_button = gtk_builder_get_object(builder, "submit_button");
-	g_signal_connect(submit_button, "clicked", G_CALLBACK(on_button_clicked), NULL);
+	add_task_button = gtk_builder_get_object(builder, "submit_button");
+	edit_task_button = gtk_builder_get_object(builder, "submit_button");
+	remove_task_button = gtk_builder_get_object(builder, "submit_button");
+	g_signal_connect(add_task_button, "clicked", G_CALLBACK(on_button_clicked), NULL);
 
 	gtk_main();
 }
