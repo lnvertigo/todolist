@@ -6,25 +6,63 @@
 		<child>
 			<object id="grid" class="GtkGrid">
 				<property name="visible">True</property>
+				<!-- TEXT DISPLAY -->
+				<child>
+					<object id="task_display" class="GtkTextView">
+						<property name="visible">True</property>
+					</object>
+					<packing>
+						<property name="left-attach">0</property>
+						<property name="top-attach">0</property>
+						<property name="width">3</property>
+						<property name="height">5</property>
+					</packing>
+				</child>
+				<!-- TEXT ENTRY FIELD -->
 				<child>
 					<object id="taskname_field" class="GtkEntry">
 						<property name="visible">True</property>
 					</object>
 					<packing>
 						<property name="left-attach">0</property>
-						<property name="top-attach">0</property>
-						<property name="width">2</property>
+						<property name="top-attach">5</property>
+						<property name="width">3</property>
 					</packing>
 				</child>
+				<!-- ADD BUTTON -->
 				<child>
-					<object id="submit_button" class="GtkButton">
+					<object id="add_button" class="GtkButton">
 						<property name="visible">True</property>
-						<property name="label">Submit</property>
+						<property name="label">Add Task</property>
 					</object>
 					<packing>
 						<property name="left-attach">0</property>
-						<property name="top-attach">1</property>
-						<property name="width">2</property>
+						<property name="top-attach">6</property>
+						<property name="width">1</property>
+					</packing>
+				</child>
+				<!-- EDIT BUTTON -->
+				<child>
+					<object id="edit_button" class="GtkButton">
+						<property name="visible">True</property>
+						<property name="label">Edit Task</property>
+					</object>
+					<packing>
+						<property name="left-attach">1</property>
+						<property name="top-attach">6</property>
+						<property name="width">1</property>
+					</packing>
+				</child>
+				<!-- DELETE BUTTON -->
+				<child>
+					<object id="remove_button" class="GtkButton">
+						<property name="visible">True</property>
+						<property name="label">Delete Task</property>
+					</object>
+					<packing>
+						<property name="left-attach">2</property>
+						<property name="top-attach">6</property>
+						<property name="width">1</property>
 					</packing>
 				</child>
 			</object>

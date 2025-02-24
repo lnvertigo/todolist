@@ -4,71 +4,7 @@
 #include "../DEP/todo_frontend.h"
 
 /* ---------------------
-* BUTTON FUNCTIONALITY 
---------------------- */
-// Callback function to handle button click
-// TODO - rework into using gtk_list_box(?)
-void on_button_clicked_addtask(GtkWidget *widget, gpointer data) {
-	// get the button label
-	const gchar* label = gtk_button_get_label(GTK_BUTTON(widget));
-
-	// if button is "Add Task", open dialog to add task
-	if (strcmp(label, "Add Task") == 0) {
-		// open dialog
-		GtkWidget* dialog = gtk_dialog_new_with_buttons("Add Task", GTK_WINDOW(data), GTK_DIALOG_MODAL, "_Cancel", GTK_RESPONSE_CANCEL, "_Add", GTK_RESPONSE_ACCEPT, NULL);
-		GtkWidget* content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-		GtkWidget* entry = gtk_entry_new();
-		gtk_container_add(GTK_CONTAINER(content_area), entry);
-		gtk_widget_show_all(dialog);
-
-		// run dialog
-		gint response = gtk_dialog_run(GTK_DIALOG(dialog));
-		if (response == GTK_RESPONSE_ACCEPT) {
-			// get task from entry
-			const gchar* task = gtk_entry_get_text(GTK_ENTRY(entry));
-			// add task to list
-			add_task(task);
-		}
-		gtk_widget_destroy(dialog);
-	}
-}
-
-void on_button_clicked_removetask(GtkWidget *widget, gpointer data) {
-	// get the button label
-	const gchar* label = gtk_button_get_label(GTK_BUTTON(widget));
-	// if button is "Remove Task", open dialog to remove task
-	else if (strcmp(label, "Remove Task") == 0) {
-		// open dialog
-		GtkWidget* dialog = gtk_dialog_new_with_buttons("Remove Task", GTK_WINDOW(data), GTK_DIALOG_MODAL, "_Cancel", GTK_RESPONSE_CANCEL, "_Remove", GTK_RESPONSE_ACCEPT, NULL);
-		GtkWidget* content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-		GtkWidget* entry = gtk_entry_new();
-		gtk_container_add(GTK_CONTAINER(content_area), entry);
-		gtk_widget_show_all(dialog);
-
-		// run dialog
-		gint response = gtk_dialog_run(GTK_DIALOG(dialog));
-		if (response == GTK_RESPONSE_ACCEPT) {
-			// get task from entry
-			const gchar* task = gtk_entry_get_text(GTK_ENTRY(entry));
-			// remove task from list
-			remove_task(task);
-		}
-		gtk_widget_destroy(dialog);
-	}
-}
-void on_button_clicked_edittask(GtkWidget *widget, gpointer data) {
-	// get the button label
-	const gchar* label = gtk_button_get_label(GTK_BUTTON(widget));
-	// if button is "Edit Task", open dialog to edit task
-	else if (strcmp(label, "Edit Task") == 0) {
-		// open dialog
-		GtkWidget* dialog = gtk_dialog_new_with_buttons("Edit Task", GTK_WINDOW(data), GTK_DIALOG_MODAL, "_Cancel", GTK_RESPONSE_CANCEL, "_Edit", GTK_RESPONSE_ACCEPT, NULL);
-		GtkWidget* content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-		GtkWidget
-}
-
-/* ---------------------
-* FILE HANDLING
+* # FILE HANDLING
 --------------------- */
 // creates filepath to ~/.todo
 char* get_file_path() {
@@ -110,7 +46,7 @@ FILE* open_file() {
 }
 
 // close file when naturally closed AND killed
-void close_file(FILE* file) {
+int close_file(FILE* file) {
 	if (fclose(file) == EOF) {
 		perror("fclose");
 		return 1;
@@ -126,3 +62,109 @@ void read_file_task(FILE* file, char* task_key) {}
 
 // read task from form in gtk and write to file
 void write_file_task(FILE* file) {}
+
+/* ---------------------
+* # BUTTON BASE CASES
+--------------------- */
+void on_button_clicked(GtkWidget *widget, gpointer data) {
+	g_print("Button clicked\n");
+}
+
+/* ---------------------
+* # BUTTON FUNCTIONALITY 
+--------------------- */
+// Callback function to handle button click
+// TODO - rework into using gtk_list_box(?)
+
+void on_button_clicked_addtask(GtkWidget *widget, gpointer data) {
+	// get the button label
+	const char* label = gtk_button_get_label(GTK_BUTTON(widget));
+
+	// open dialog
+	GtkWidget* dialog = gtk_dialog_new_with_buttons("Add Task", GTK_WINDOW(data), GTK_DIALOG_MODAL, "_Cancel", GTK_RESPONSE_CANCEL, "_Add", GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget* content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+	GtkWidget* entry = gtk_entry_new();
+	gtk_container_add(GTK_CONTAINER(content_area), entry);
+	gtk_widget_show_all(dialog);
+
+	// run dialog
+	gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+	if (response == GTK_RESPONSE_ACCEPT) {
+		// get task from entry
+		const char* task = gtk_entry_get_text(GTK_ENTRY(entry));
+		// add task to list
+		add_task(task);
+	}
+	gtk_widget_destroy(dialog);
+}
+
+/* ## REMOVE TASK */
+void on_button_clicked_removetask(GtkWidget *widget, gpointer data) {
+	// get the button label
+	const gchar* label = gtk_button_get_label(GTK_BUTTON(widget));
+
+	// open dialog
+	GtkWidget* dialog = gtk_dialog_new_with_buttons("Remove Task", GTK_WINDOW(data), GTK_DIALOG_MODAL, "_Cancel", GTK_RESPONSE_CANCEL, "_Remove", GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget* content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+	GtkWidget* entry = gtk_entry_new();
+	gtk_container_add(GTK_CONTAINER(content_area), entry);
+	gtk_widget_show_all(dialog);
+
+	// run dialog
+	gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+	if (response == GTK_RESPONSE_ACCEPT) {
+		// get task from entry
+		const gchar* task = gtk_entry_get_text(GTK_ENTRY(entry));
+		// remove task from list
+		//remove_task(task);
+	}
+	gtk_widget_destroy(dialog);
+}
+
+/* ## EDIT TASK */
+void on_button_clicked_edittask(GtkWidget *widget, gpointer data) {
+	// get the button label
+	const gchar* label = gtk_button_get_label(GTK_BUTTON(widget));
+
+	// open dialog
+	GtkWidget* dialog = gtk_dialog_new_with_buttons("Edit Task", GTK_WINDOW(data), GTK_DIALOG_MODAL, "_Cancel", GTK_RESPONSE_CANCEL, "_Edit", GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget* content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+}
+
+/* ## BUTTON HELPERS */
+void add_task(char* task) {}
+
+/* 
+* TEST AREA
+*/
+void button_click_dialog_test(GtkWidget *widget, gpointer data) {
+	// get button label - eg "add_button"
+	const char* label = gtk_button_get_label(GTK_BUTTON(widget));
+
+	// dialog - "modal dialog" w/ _Add button and _Cancel button
+	GtkWidget* dialog = gtk_dialog_new_with_buttons("Add Task", GTK_WINDOW(data), \
+	GTK_DIALOG_MODAL, "_Cancel", \
+	GTK_RESPONSE_CANCEL, "_Submit", GTK_RESPONSE_ACCEPT, NULL);
+
+	// access to dialog/content_area (window space)
+	GtkWidget* content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+	// create text entry widget
+	GtkWidget* entry = gtk_entry_new();
+	// add text entry widget to dialog/content_area
+	gtk_container_add(GTK_CONTAINER(content_area), entry);
+	// display dialog (with txt entry and buttons)
+	gtk_widget_show_all(dialog);
+
+	// run dialog
+	gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+	// wait for response
+	if (response == GTK_RESPONSE_ACCEPT) {
+		// get task from text entry
+		const char* task = gtk_entry_get_text(GTK_ENTRY(entry));
+		// add task to list
+		strncat(task, "\n", 2);
+		g_print(task);
+	}
+	// free() for dialog
+	gtk_widget_destroy(dialog);
+}

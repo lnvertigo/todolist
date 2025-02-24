@@ -8,8 +8,9 @@
 void gtk_xml_builder(int argc, char *argv[]) {
 	GtkBuilder *builder;
 	GObject *window;
+	GObject *task_display;
 	GObject *taskname_field;
-	GObject *submit_button;
+	GObject *add_task_button, *edit_task_button, *remove_task_button;
 	GError *error = NULL;
 
 	// initialize GTK
@@ -27,12 +28,14 @@ void gtk_xml_builder(int argc, char *argv[]) {
 	window = gtk_builder_get_object(builder, "window");
 	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
+	task_display = gtk_builder_get_object(builder, "task_display");
 	taskname_field = gtk_builder_get_object(builder, "taskname_field");
 
-	add_task_button = gtk_builder_get_object(builder, "submit_button");
-	edit_task_button = gtk_builder_get_object(builder, "submit_button");
-	remove_task_button = gtk_builder_get_object(builder, "submit_button");
-	g_signal_connect(add_task_button, "clicked", G_CALLBACK(on_button_clicked), NULL);
+	add_task_button = gtk_builder_get_object(builder, "add_button");
+	edit_task_button = gtk_builder_get_object(builder, "edit_button");
+	remove_task_button = gtk_builder_get_object(builder, "remove_button");
+	g_signal_connect(add_task_button, "clicked", G_CALLBACK(button_click_dialog_test), NULL);
+	g_signal_connect(edit_task_button, "clicked", G_CALLBACK(on_button_clicked), NULL);
 
 	gtk_main();
 }
